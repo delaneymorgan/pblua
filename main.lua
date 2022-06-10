@@ -70,9 +70,41 @@ local sprint = function( fmt, ...)
     return str
 end
 
+local pbuf = function( buf)
+    local str = ""
+    local first = true
+    str = "["
+    for _,value in ipairs( buf) do
+        if not first then
+            str = str .. ", "
+        end
+        first = false
+        str = str .. string.format( "0x%02x", value)
+    end
+    str = str .. "]"
+    return str
+end
+
+local strToBuf = function( str)
+    local bytes = {}
+    for idx = 1,#str do
+        local chr = str:sub(idx, idx)
+        local byte = string.byte( chr)
+        table.insert( bytes, byte)
+    end
+    return bytes
+end
+
+local PROTOBUF_DATA = "addressbook.data"
 
 print( sprint( "hello"))
 local tab = { a=1, b=2, c=3, d={4, 5, 6}, e={z=123, x=321, y="FRED"}}
 tab[1] = 1.2345
 tab[2] = { 956, 123}
-print( sprint( "%s", tab))
+print( sprint( "tab: %s", tab))
+local inFile = io.open(PROTOBUF_DATA, "rb")
+local buffer = inFile:read("*a")
+inFile.close()
+local bytes = strToBuf( buffer)
+print( sprint( "buffer: %s", pbuf( bytes)))
+
