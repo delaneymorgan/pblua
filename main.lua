@@ -47,7 +47,9 @@ end
 
 
 local decodeLengthDelimited = function( bytes, startPos)
-    local length = bytes[startPos]
+    local keyChunk
+    startPos, keyChunk = DECODER[PB_TYPES.VARINT]( bytes, startPos)
+    local length = evaluateVarint( keyChunk)
 end
 
 
@@ -89,9 +91,10 @@ print( m_p.sprint( "buffer: %s", m_p.pbuf( bytes)))
 local thisPos = 1
 local nextPos = 1
 local level = 0
+local chunk
 repeat
     thisPos = nextPos
-    local nextPos, chunk, level = grabChunk( bytes, thisPos, level)
+    nextPos, chunk, level = grabChunk( bytes, thisPos, level)
     local length = nextPos - thisPos
     print( m_p.sprint( "chunk: %s", m_p.pbuf( chunk)))
 until thisPos == nextPos

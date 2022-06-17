@@ -1,0 +1,38 @@
+syntax = "proto2";
+
+package tutorial;
+
+message KitchenSink {
+
+  enum MyENum {
+    MY_ENUM_0 = 0;
+    MY_ENUM_1 = 1;
+    MY_ENUM_2 = 2;
+    MY_ENUM_3 = 3;
+    MY_ENUM_4 = 4;
+  }
+
+  optional int32 f_MinInt32 = 1;
+  optional int32 f_MaxInt32 = 2;
+  optional int64 f_MinInt64 = 3;
+  optional int64 f_MaxInt64 = 4;
+  optional uint32 f_MinUInt32 = 5;
+  optional uint32 f_MaxUInt32 = 6;
+  optional uint64 f_MinUInt64 = 7;
+  optional uint64 f_MaxUInt64 = 8;
+  optional sint32 f_MinSInt32 = 9;
+  optional sint32 f_MaxSInt32 = 10;
+  optional sint64 f_MinSInt64 = 11;
+  optional sint64 f_MaxSInt64 = 12;
+  optional MyENum f_MyENum = 13 [default = MY_ENUM_2];
+  optional string f_String = 14;
+  optional bytes f_Bytes = 15;
+  optional fixed32 f_Fixed32 = 16;
+  optional sfixed32 f_SFixed32 = 17;
+  optional float f_Float = 18;
+}
+
+message ManyKitchenSinks {
+  repeated KitchenSink f_KitchenSink = 1;
+}
+

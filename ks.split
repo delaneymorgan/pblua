@@ -1,0 +1,35 @@
+08 - F=1, T=0
+80 80 80 80 f8 ff ff ff ff 01
+10 - F=2, T=0
+ff ff ff ff 07
+18 - F=3, T=0
+80 80 80 80 80 80 80 80 80 01
+20 - F=4, T=0
+ff ff ff ff ff ff ff ff 7f
+28 - F=5, T=0
+00
+30 - F=6, T=0
+ff ff ff ff 0f
+38 - F=7, T=0
+00
+40 - F=8, T=0
+ff ff ff ff ff ff ff ff ff 01
+48 - F=9, T=0
+ff ff ff ff 0f
+50 - F=10, T=0
+fe ff ff ff 0f
+58 - F=11, T=0
+ff ff ff ff ff ff ff ff ff 01
+60 - F=12, T=0
+fe ff ff ff ff ff ff ff ff 01
+68 - F=13, T=0
+02
+72 - F=14, T=2
+10 - Length=16
+48
+65
+72
+65 20 69 73 20 61 20 73 74 72 69 6e
+0000160 67 85 01 01 00 00 00 8d 01 ff ff ff ff 95 01 20
+0000200 b2 96 49
+0000203
