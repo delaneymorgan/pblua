@@ -12,27 +12,68 @@ message KitchenSink {
     MY_ENUM_4 = 4;
   }
 
-  optional int32 f_MinInt32 = 1;
-  optional int32 f_MaxInt32 = 2;
-  optional int64 f_MinInt64 = 3;
-  optional int64 f_MaxInt64 = 4;
-  optional uint32 f_MinUInt32 = 5;
-  optional uint32 f_MaxUInt32 = 6;
-  optional uint64 f_MinUInt64 = 7;
-  optional uint64 f_MaxUInt64 = 8;
-  optional sint32 f_MinSInt32 = 9;
-  optional sint32 f_MaxSInt32 = 10;
-  optional sint64 f_MinSInt64 = 11;
-  optional sint64 f_MaxSInt64 = 12;
-  optional MyENum f_MyENum = 13 [default = MY_ENUM_2];
-  optional string f_String = 14;
-  optional bytes f_Bytes = 15;
-  optional fixed32 f_Fixed32 = 16;
-  optional sfixed32 f_SFixed32 = 17;
-  optional float f_Float = 18;
+  optional int32 int32_minus_big        = 1;
+  optional int32 int32_minus_one        = 2;
+  optional int32 int32_zero             = 3;
+  optional int32 int32_plus_one         = 4;
+  optional int32 int32_plus_big         = 5;
+
+  optional int64 int64_minus_big        = 6;
+  optional int64 int64_minus_one        = 7;
+  optional int64 int64_zero             = 8;
+  optional int64 int64_plus_one         = 9;
+  optional int64 int64_plus_big         = 10;
+
+  optional uint32 uint32_zero           = 11;
+  optional uint32 uint32_plus_one       = 12;
+  optional uint32 uint32_plus_big       = 13;
+
+  optional uint64 uint64_zero           = 14;
+  optional uint64 uint64_plus_one       = 15;
+  optional uint64 uint64_plus_big       = 16;
+
+  optional int32 sint32_minus_big       = 17;
+  optional int32 sint32_minus_one       = 18;
+  optional int32 sint32_zero            = 19;
+  optional int32 sint32_plus_one        = 20;
+  optional int32 sint32_plus_big        = 21;
+
+  optional int64 sint64_minus_big       = 22;
+  optional int64 sint64_minus_one       = 23;
+  optional int64 sint64_zero            = 24;
+  optional int64 sint64_plus_one        = 25;
+  optional int64 sint64_plus_big        = 26;
+
+  optional fixed32 fixed32_minus_big    = 27;
+  optional fixed32 fixed32_minus_one    = 28;
+  optional fixed32 fixed32_zero         = 29;
+  optional fixed32 fixed32_plus_one     = 30;
+  optional fixed32 fixed32_plus_big     = 31;
+
+  optional sfixed32 sfixed32_minus_big  = 32;
+  optional sfixed32 sfixed32_minus_one  = 33;
+  optional sfixed32 sfixed32_zero       = 34;
+  optional sfixed32 sfixed32_plus_one   = 35;
+  optional sfixed32 sfixed32_plus_big   = 36;
+
+  optional float float_minus_big        = 37;
+  optional float float_minus_one        = 38;
+  optional float float_zero             = 39;
+  optional float float_plus_one         = 40;
+  optional float float_plus_big         = 41;
+
+  optional double double_minus_big      = 42;
+  optional double double_minus_one      = 43;
+  optional double double_zero           = 44;
+  optional double double_plus_one       = 45;
+  optional double double_plus_big       = 46;
+
+  optional MyENum my_enum               = 47 [default = MY_ENUM_2];
+  optional string my_string             = 48;
+  optional bytes my_bytes               = 49;
 }
 
 message ManyKitchenSinks {
-  repeated KitchenSink f_KitchenSink = 1;
+  repeated KitchenSink kitchen_sink = 1;
 }
 

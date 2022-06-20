@@ -43,17 +43,29 @@ end
 
 
 local decode64Bit = function( bytes, startPos)
+    local chunkEnd = startPos + 8 - 1
+    local chunk = {table.unpack( bytes, startPos, chunkEnd)}
+    chunkEnd = chunkEnd + 1
+    return chunkEnd, chunk
 end
 
 
 local decodeLengthDelimited = function( bytes, startPos)
     local keyChunk
-    startPos, keyChunk = DECODER[PB_TYPES.VARINT]( bytes, startPos)
+    startPos, keyChunk = decodeVarint( bytes, startPos)
     local length = evaluateVarint( keyChunk)
+    local chunkEnd = startPos + length - 1
+    local chunk = {table.unpack( bytes, startPos, chunkEnd)}
+    chunkEnd = chunkEnd + 1
+    return chunkEnd, chunk
 end
 
 
 local decode32Bit = function( bytes, startPos)
+    local chunkEnd = startPos + 4 - 1
+    local chunk = {table.unpack( bytes, startPos, chunkEnd)}
+    chunkEnd = chunkEnd + 1
+    return chunkEnd, chunk
 end
 
 
@@ -70,12 +82,12 @@ local grabChunk = function( bytes, startPos, level)
     startPos, keyChunk = DECODER[PB_TYPES.VARINT]( bytes, startPos)
     local key = evaluateVarint( keyChunk)
     local fieldNo, fieldType = splitKey( key)
-    local nextChunk, chunk = DECODER[fieldType](bytes, startPos + 1)
-    return nextChunk, chunk, level
+    local nextChunk, chunk = DECODER[fieldType](bytes, startPos)
+    return nextChunk, fieldNo, chunk, level
 end
 
 
-local PROTOBUF_DATA = "kitchensink.data"
+local PROTOBUF_DATA = "ks.data"
 
 
 print( m_p.sprint( "hello"))
@@ -92,9 +104,12 @@ local thisPos = 1
 local nextPos = 1
 local level = 0
 local chunk
+local fieldNo
+local msg = {}
 repeat
     thisPos = nextPos
-    nextPos, chunk, level = grabChunk( bytes, thisPos, level)
+    nextPos, fieldNo, chunk, level = grabChunk( bytes, thisPos, level)
+    msg[fieldNo] = chunk
     local length = nextPos - thisPos
     print( m_p.sprint( "chunk: %s", m_p.pbuf( chunk)))
 until thisPos == nextPos
