@@ -7,17 +7,19 @@ local PRINT = {}
 
 
 PRINT.eprint = function( element)
-    local str = "nil"
-    if element then
+    local out = "nil"
+    if element ~= nil then
         if type( element) == "table" then
-            str = PRINT.tprint( element)
+            out = PRINT.tprint( element)
         elseif type( element) == "string" then
-            str = '"' .. element .. '"'
+            out = '"' .. element .. '"'
         elseif type( element) == "number" then
-            str = tostring( element)
+            out = element
+        elseif type( element) == "boolean" then
+            out = tostring( element)
         end
     end
-    return str
+    return out
 end
 
 
@@ -61,7 +63,11 @@ PRINT.sprint = function( fmt, ...)
     local arg = {...}
     local str = fmt
     if #arg > 0 then
-        str = string.format( fmt, PRINT.eprint( unpack( arg)))
+        local niceArgs = {}
+        for _,val in ipairs(arg) do
+            table.insert( niceArgs, PRINT.eprint( val))
+        end
+        str = string.format( fmt, unpack( niceArgs))
     end
     return str
 end

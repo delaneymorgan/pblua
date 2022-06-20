@@ -15,5 +15,11 @@ UTILS.tkeys = function( obj)
     return keys
 end
 
+UTILS.isprint = function( char)
+    if char >= 0x20 and char <= 0x7f then
+        return true
+    end
+    return false
+end
 
 return UTILS
