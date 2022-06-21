@@ -55,6 +55,9 @@ PRINT.tprint = function( obj)
         end
         str = str .. "]"
     end
+    if string.len( str) == 0 then
+        str = "{}"
+    end
     return str
 end
 

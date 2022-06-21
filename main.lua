@@ -7,7 +7,7 @@ local m_pbl = require( "pblow")
 local m_u = require( "utils")
 
 
-local PROTOBUF_DATA = "ks.data"
+local PROTOBUF_DATA = "./proto/ks.data"
 
 
 local floatBytes = {0x20, 0xb2, 0x96, 0x49}     -- 0x4996b43f
