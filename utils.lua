@@ -1,5 +1,7 @@
 -- utils
 
+local m_b = require( "bit32")
+
 
 local UTILS = {}
 
@@ -34,14 +36,14 @@ end
 UTILS.bytesToFloat32 = function( bytes)
     assert( #bytes == 4)
     local sign = 1
-    if bit.band( bytes[4], 0x80) ~= 0 then
+    if m_b.band( bytes[4], 0x80) ~= 0 then
         sign = -1
     end
-    local exponent = bit.rshift( bytes[3], 7)
-    exponent = bit.bor( exponent, bit.lshift( bit.band( bytes[4], 0x7f), 1))
-    local mantissa = bit.band( bytes[3], 0x7f)
-    mantissa = bit.bor( bit.lshift( mantissa, 8), bytes[2])
-    mantissa = bit.bor( bit.lshift( mantissa, 8), bytes[1])
+    local exponent = m_b.rshift( bytes[3], 7)
+    exponent = m_b.bor( exponent, m_b.lshift( m_b.band( bytes[4], 0x7f), 1))
+    local mantissa = m_b.band( bytes[3], 0x7f)
+    mantissa = m_b.bor( m_b.lshift( mantissa, 8), bytes[2])
+    mantissa = m_b.bor( m_b.lshift( mantissa, 8), bytes[1])
     mantissa = (math.ldexp( mantissa, -23) + 1) * sign
     local float32 = math.ldexp( mantissa, exponent - 127)
     return float32
