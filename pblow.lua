@@ -1,4 +1,4 @@
--- pblow - low level protobuf decoding
+-- pblow - low level protobuf decoding for protobuf 2/3 standards
 
 local m_u = require( "utils")
 
@@ -93,10 +93,18 @@ PBLOW.convertVarint = function( chunk)
 end
 
 PBLOW.convert64Bit = function( chunk)
-    return nil
+    -- fixed64, sfixed64, double
+    local converted = {}
+    local num = PBLOW.evaluateVarint( chunk)
+    local absNum = math.abs( num)
+    converted.fixed64 = num
+    converted.sfixed64 = num
+    converted.double = nil          -- NOTE: Can't convert bytes to double because of Lua bitops limitations
+    return converted
 end
 
 PBLOW.convertLengthDelimited = function( chunk)
+    -- string, bytes, embedded messages, packed repeated fields
     local converted = {}
     local str = ""
     local fail = false
@@ -115,7 +123,14 @@ PBLOW.convertLengthDelimited = function( chunk)
 end
 
 PBLOW.convert32Bit = function( chunk)
-    return nil
+    -- fixed32, sfixed32, float
+    local converted = {}
+    local num = PBLOW.evaluateVarint( chunk)
+    local absNum = math.abs( num)
+    converted.fixed32 = num
+    converted.sfixed32 = num
+    converted.float = m_u.bytesToFloat32( chunk)
+    return converted
 end
 
 PBLOW.CONVERTER = {

@@ -4,12 +4,16 @@
 
 local m_p = require( "print")
 local m_pbl = require( "pblow")
+local m_u = require( "utils")
 
 
 local PROTOBUF_DATA = "ks.data"
 
 
---print( m_p.sprint( "hello"))
+local floatBytes = {0x20, 0xb2, 0x96, 0x49}     -- 0x4996b43f
+local float = m_u.bytesToFloat32( floatBytes)
+print( float)
+
 local tab = { a=1, b=2, c=3, d={4, 5, 6}, e={z=123, x=321, y="FRED"}}
 tab[1] = 1.2345
 tab[2] = { 956, 123}
