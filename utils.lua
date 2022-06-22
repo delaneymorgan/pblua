@@ -2,8 +2,6 @@
 
 local m_b32 = require( "bit32")
 
-local m_b64 = require( "bit64")
-
 
 local UTILS = {}
 
@@ -72,13 +70,13 @@ UTILS.bytesToDouble = function( bytes)
     end
     local exponent = m_b32.rshift( bytes[7], 4)
     exponent = m_b32.bor( exponent, m_b32.lshift( m_b32.band( bytes[8], 0x7f), 4))
-    local mantissa = m_b64.band( bytes[7], 0x0f)
-    mantissa = m_b64.bor( m_b64.lshift( mantissa, 8), bytes[6])
-    mantissa = m_b64.bor( m_b64.lshift( mantissa, 8), bytes[5])
-    mantissa = m_b64.bor( m_b64.lshift( mantissa, 8), bytes[4])
-    mantissa = m_b64.bor( m_b64.lshift( mantissa, 8), bytes[3])
-    mantissa = m_b64.bor( m_b64.lshift( mantissa, 8), bytes[2])
-    mantissa = m_b64.bor( m_b64.lshift( mantissa, 8), bytes[1])
+    local mantissa = m_b32.band( bytes[7], 0x0f)
+    mantissa = mantissa * 2^8 + bytes[6]
+    mantissa = mantissa * 2^8 + bytes[5]
+    mantissa = mantissa * 2^8 + bytes[4]
+    mantissa = mantissa * 2^8 + bytes[3]
+    mantissa = mantissa * 2^8 + bytes[2]
+    mantissa = mantissa * 2^8 + bytes[1]
     mantissa = (math.ldexp( mantissa, -52) + 1) * sign
     local double = math.ldexp( mantissa, exponent - 1023)
     return double
