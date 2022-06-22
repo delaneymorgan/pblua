@@ -1,6 +1,6 @@
 -- pblow - low level protobuf decoding for protobuf 2/3 standards
 
-local m_b = require( "bit32")
+local m_b32 = require( "bit32")
 
 local m_u = require( "utils")
 
@@ -17,16 +17,16 @@ local PB_PRIMITIVES = {
 
 
 PBLOW.splitKey = function( key)
-    local fieldNo = m_b.rshift( key, 3)
-    local fieldType = m_b.band( key, 0x07)
+    local fieldNo = m_b32.rshift( key, 3)
+    local fieldType = m_b32.band( key, 0x07)
     return fieldNo, fieldType
 end
 
 PBLOW.evaluateVarint = function( chunk)
     local num = 0
     for idx = #chunk, 1, -1 do
-        num = m_b.lshift( num, 7)
-        num = m_b.bor( num, m_b.band( chunk[idx], 0x7f))
+        num = m_b32.lshift( num, 7)
+        num = m_b32.bor( num, m_b32.band( chunk[idx], 0x7f))
     end
     return num
 end
@@ -101,7 +101,7 @@ PBLOW.convert64Bit = function( chunk)
     local absNum = math.abs( num)
     converted.fixed64 = num
     converted.sfixed64 = num
-    converted.double = nil          -- NOTE: Can't convert bytes to double because of Lua bitops limitations
+    converted.double = m_u.bytesToDouble( chunk)
     return converted
 end
 
