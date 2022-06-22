@@ -17,6 +17,18 @@ UTILS.tkeys = function( obj)
     return keys
 end
 
+
+UTILS.strToBuf = function( str)
+    local bytes = {}
+    for idx = 1,#str do
+        local chr = str:sub(idx, idx)
+        local byte = string.byte( chr)
+        table.insert( bytes, byte)
+    end
+    return bytes
+end
+
+
 UTILS.isprint = function( char)
     if char >= 0x20 and char <= 0x7f then
         return true

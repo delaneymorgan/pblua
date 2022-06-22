@@ -103,14 +103,8 @@ PRINT.pbuf = function( buf, start, length)
 end
 
 
-PRINT.strToBuf = function( str)
-    local bytes = {}
-    for idx = 1,#str do
-        local chr = str:sub(idx, idx)
-        local byte = string.byte( chr)
-        table.insert( bytes, byte)
-    end
-    return bytes
+PRINT.print = function( fmt, ...)
+    print( PRINT.sprint( fmt, ...))
 end
 
 
