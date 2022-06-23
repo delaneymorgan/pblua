@@ -29,6 +29,15 @@ UTILS.strToBuf = function( str)
 end
 
 
+UTILS.bufToStr = function( buf)
+    local str = ""
+    for _,byte in ipairs( buf) do
+        str = str .. string.char( byte)
+    end
+    return str
+end
+
+
 UTILS.isprint = function( char)
     if char >= 0x20 and char <= 0x7f then
         return true

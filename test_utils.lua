@@ -21,9 +21,13 @@ function test_bytesToDouble()
 end
 
 function test_strToBuf()
-    local buffer = "DEAD BEEF"
-    local bytes = m_u.strToBuf( buffer)
-    luaunit.assertEquals( m_u.strToBuf( buffer), {0x44, 0x45, 0x41, 0x44, 0x20, 0x42, 0x45, 0x45, 0x46})
+    local str = "DEAD BEEF"
+    luaunit.assertEquals( m_u.strToBuf( str), {0x44, 0x45, 0x41, 0x44, 0x20, 0x42, 0x45, 0x45, 0x46})
+end
+
+function test_bufToStr()
+    local buffer = {0x44, 0x45, 0x41, 0x44, 0x20, 0x42, 0x45, 0x45, 0x46}
+    luaunit.assertEquals( m_u.bufToStr( buffer), "DEAD BEEF")
 end
 
 os.exit( luaunit.LuaUnit.run() )

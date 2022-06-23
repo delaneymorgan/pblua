@@ -98,7 +98,6 @@ PBLOW.convert64Bit = function( chunk)
     -- fixed64, sfixed64, double
     local converted = {}
     local num = PBLOW.evaluateVarint( chunk)
-    local absNum = math.abs( num)
     converted.fixed64 = num
     converted.sfixed64 = num
     converted.double = m_u.bytesToDouble( chunk)
@@ -128,7 +127,6 @@ PBLOW.convert32Bit = function( chunk)
     -- fixed32, sfixed32, float
     local converted = {}
     local num = PBLOW.evaluateVarint( chunk)
-    local absNum = math.abs( num)
     converted.fixed32 = num
     converted.sfixed32 = num
     converted.float = m_u.bytesToFloat32( chunk)
