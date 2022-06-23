@@ -1,6 +1,9 @@
 -- utils
 
-local m_b32 = require( "bit32")
+local status, m_bit = pcall( require, "bit32")
+if not status then
+    m_bit = require( "bit")     -- Lua 5.1
+end
 
 
 local UTILS = {}
@@ -57,14 +60,14 @@ end
 UTILS.bytesToFloat32 = function( bytes)
     assert( #bytes == 4)
     local sign = 1
-    if m_b32.band( bytes[4], 0x80) ~= 0 then
+    if m_bit.band( bytes[4], 0x80) ~= 0 then
         sign = -1
     end
-    local exponent = m_b32.rshift( bytes[3], 7)
-    exponent = m_b32.bor( exponent, m_b32.lshift( m_b32.band( bytes[4], 0x7f), 1))
-    local mantissa = m_b32.band( bytes[3], 0x7f)
-    mantissa = m_b32.bor( m_b32.lshift( mantissa, 8), bytes[2])
-    mantissa = m_b32.bor( m_b32.lshift( mantissa, 8), bytes[1])
+    local exponent = m_bit.rshift( bytes[3], 7)
+    exponent = m_bit.bor( exponent, m_bit.lshift( m_bit.band( bytes[4], 0x7f), 1))
+    local mantissa = m_bit.band( bytes[3], 0x7f)
+    mantissa = m_bit.bor( m_bit.lshift( mantissa, 8), bytes[2])
+    mantissa = m_bit.bor( m_bit.lshift( mantissa, 8), bytes[1])
     mantissa = (math.ldexp( mantissa, -23) + 1) * sign
     local float32 = math.ldexp( mantissa, exponent - 127)
     return float32
@@ -74,12 +77,12 @@ UTILS.bytesToDouble = function( bytes)
     assert( #bytes == 8)
     -- NOT IMPLEMENTED - LUA BITOPS ONLY 32-BIT WHICH MAKES MANTISSA CALCULATION A PROBLEM
     local sign = 1
-    if m_b32.band( bytes[8], 0x80) ~= 0 then
+    if m_bit.band( bytes[8], 0x80) ~= 0 then
         sign = -1
     end
-    local exponent = m_b32.rshift( bytes[7], 4)
-    exponent = m_b32.bor( exponent, m_b32.lshift( m_b32.band( bytes[8], 0x7f), 4))
-    local mantissa = m_b32.band( bytes[7], 0x0f)
+    local exponent = m_bit.rshift( bytes[7], 4)
+    exponent = m_bit.bor( exponent, m_bit.lshift( m_bit.band( bytes[8], 0x7f), 4))
+    local mantissa = m_bit.band( bytes[7], 0x0f)
     mantissa = mantissa * 2^8 + bytes[6]
     mantissa = mantissa * 2^8 + bytes[5]
     mantissa = mantissa * 2^8 + bytes[4]
