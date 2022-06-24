@@ -3,6 +3,12 @@ local luaunit = require( "luaunit")
 local m_u = require( "utils")
 
 
+function test_bytesToOnesComplement()
+    luaunit.assertAlmostEquals( m_u.bytesToOnesComplement( {0x00, 0x00, 0x00, 0x00}), {0xff, 0xff, 0xff, 0xff})
+    luaunit.assertAlmostEquals( m_u.bytesToOnesComplement( {0xaa, 0x55, 0xaa, 0x55}), {0x55, 0xaa, 0x55, 0xaa})
+    luaunit.assertAlmostEquals( m_u.bytesToOnesComplement( {0xff, 0xff, 0xff, 0xff}), {0x00, 0x00, 0x00, 0x00})
+end
+
 function test_bytesToFixed32()
     luaunit.assertAlmostEquals( m_u.bytesToFixed32( {0x00, 0x00, 0x00, 0x00}), 0)
     luaunit.assertAlmostEquals( m_u.bytesToFixed32( {0x01, 0x00, 0x00, 0x00}), 1)
