@@ -11,6 +11,7 @@ local m_u = require( "utils")
 local PBLOW = {}
 
 
+
 local PB_PRIMITIVES = {
     VARINT              = 0,        -- int32, int64, uint32, uint64, sint32, sint64, bool, enum
     BIT64               = 1,        -- fixed64, sfixed64, double
@@ -100,9 +101,8 @@ end
 PBLOW.convert64Bit = function( chunk)
     -- fixed64, sfixed64, double
     local converted = {}
-    local num = PBLOW.evaluateVarint( chunk)
-    converted.fixed64 = num
-    converted.sfixed64 = num
+    converted.fixed64 = m_u.bytesToFixed64( chunk)
+    converted.sfixed64 = m_u.bytesToSFixed64( chunk)
     converted.double = m_u.bytesToDouble( chunk)
     return converted
 end
@@ -129,9 +129,8 @@ end
 PBLOW.convert32Bit = function( chunk)
     -- fixed32, sfixed32, float
     local converted = {}
-    local num = PBLOW.evaluateVarint( chunk)
-    converted.fixed32 = num
-    converted.sfixed32 = num
+    converted.fixed32 = m_u.bytesToFixed32( chunk)
+    converted.sfixed64 = m_u.bytesToSFixed32( chunk)
     converted.float = m_u.bytesToFloat32( chunk)
     return converted
 end
