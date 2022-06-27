@@ -70,7 +70,7 @@ PRINT.sprint = function( fmt, ...)
         for _,val in ipairs(arg) do
             table.insert( niceArgs, PRINT.eprint( val))
         end
-        str = string.format( fmt, unpack( niceArgs))
+        str = string.format( fmt, m_u.unpack( niceArgs))
     end
     return str
 end

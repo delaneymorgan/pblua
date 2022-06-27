@@ -43,7 +43,7 @@ PBLOW.decodeVarint = function(bytes, startPos)
         end
         chunkEnd = chunkEnd + 1
     until false
-    local chunk = {table.unpack( bytes, startPos, chunkEnd)}
+    local chunk = {m_u.unpack( bytes, startPos, chunkEnd)}
     chunkEnd = chunkEnd + 1
     return chunkEnd, chunk
 end
@@ -51,7 +51,7 @@ end
 
 PBLOW.decode64Bit = function( bytes, startPos)
     local chunkEnd = startPos + 8 - 1
-    local chunk = {table.unpack( bytes, startPos, chunkEnd)}
+    local chunk = {m_u.unpack( bytes, startPos, chunkEnd)}
     chunkEnd = chunkEnd + 1
     return chunkEnd, chunk
 end
@@ -62,7 +62,7 @@ PBLOW.decodeLengthDelimited = function( bytes, startPos)
     startPos, keyChunk = PBLOW.decodeVarint( bytes, startPos)
     local length = PBLOW.evaluateVarint( keyChunk)
     local chunkEnd = startPos + length - 1
-    local chunk = {table.unpack( bytes, startPos, chunkEnd)}
+    local chunk = {m_u.unpack( bytes, startPos, chunkEnd)}
     chunkEnd = chunkEnd + 1
     return chunkEnd, chunk
 end
@@ -70,7 +70,7 @@ end
 
 PBLOW.decode32Bit = function( bytes, startPos)
     local chunkEnd = startPos + 4 - 1
-    local chunk = {table.unpack( bytes, startPos, chunkEnd)}
+    local chunk = {m_u.unpack( bytes, startPos, chunkEnd)}
     chunkEnd = chunkEnd + 1
     return chunkEnd, chunk
 end

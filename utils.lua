@@ -172,4 +172,9 @@ UTILS.bytesToDouble = function( bytes)
     return double
 end
 
+UTILS.unpack = unpack               -- lua5.1, luajit
+if UTILS.unpack == nil then
+    UTILS.unpack = table.unpack     -- lua5.2, or later
+end
+
 return UTILS
