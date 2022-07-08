@@ -76,6 +76,14 @@ PBLOW.decode32Bit = function( bytes, startPos)
 end
 
 
+PBLOW.zigZagToSInt = function( num)
+    local intNum = math.floor( num)
+    local sint = math.floor( m_bit.rshift( intNum, 1)) + 1
+    sint = sint * (m_bit.band( intNum, 1) * -1)
+    return sint
+end
+
+
 PBLOW.convertVarint = function( chunk)
     -- int32, int64, uint32, uint64, sint32, sint64, bool, enum
     local converted = {}
@@ -83,10 +91,9 @@ PBLOW.convertVarint = function( chunk)
     local absNum = math.abs( num)
     if (absNum >= -0x80000000) and (absNum <= 0x7fffffff) then
         converted.int32  = num
-        converted.sint32 = num
+        converted.sint32 = PBLOW.zigZagToSInt( num)
     end
     converted.int64  = num
-    converted.sint64 = num
     if num >= 0 then
         if math.abs( num) < 0x7fffffff then
             converted.uint32 = num
@@ -94,6 +101,7 @@ PBLOW.convertVarint = function( chunk)
         converted.uint64 = num
         converted.enum   = num
     end
+    converted.sint64 = PBLOW.zigZagToSInt( num)
     converted.bool = (num ~= 0)
     return converted
 end
