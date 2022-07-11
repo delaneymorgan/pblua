@@ -77,10 +77,15 @@ end
 
 
 PBLOW.zigZagToSInt = function( num)
-    local intNum = math.floor( num)
-    local sint = math.floor( m_bit.rshift( intNum, 1)) + 1
-    sint = sint * (m_bit.band( intNum, 1) * -1)
-    return sint
+    if num >= 0 then
+        local intNum = math.floor( num)
+        local sint = math.floor( m_bit.rshift( intNum, 1))
+        if m_bit.band( intNum, 1) ~= 0 then
+            sint = -sint - 1
+        end
+        return sint
+    end
+    return nil
 end
 
 

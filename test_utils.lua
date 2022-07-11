@@ -3,19 +3,22 @@ local luaunit = require( "luaunit")
 local m_u = require( "utils")
 
 
-function test_bytesToOnesComplement()
+local TU = {}
+
+
+function TU.test_bytesToOnesComplement()
     luaunit.assertAlmostEquals( m_u.bytesToOnesComplement( {0x00, 0x00, 0x00, 0x00}), {0xff, 0xff, 0xff, 0xff})
     luaunit.assertAlmostEquals( m_u.bytesToOnesComplement( {0xaa, 0x55, 0xaa, 0x55}), {0x55, 0xaa, 0x55, 0xaa})
     luaunit.assertAlmostEquals( m_u.bytesToOnesComplement( {0xff, 0xff, 0xff, 0xff}), {0x00, 0x00, 0x00, 0x00})
 end
 
-function test_bytesToFixed32()
+function TU.test_bytesToFixed32()
     luaunit.assertAlmostEquals( m_u.bytesToFixed32( {0x00, 0x00, 0x00, 0x00}), 0)
     luaunit.assertAlmostEquals( m_u.bytesToFixed32( {0x01, 0x00, 0x00, 0x00}), 1)
     luaunit.assertAlmostEquals( m_u.bytesToFixed32( {0xff, 0xff, 0xff, 0xff}), 4294967295)
 end
 
-function test_bytesToSFixed32()
+function TU.test_bytesToSFixed32()
     luaunit.assertAlmostEquals( m_u.bytesToSFixed32( {0x00, 0x00, 0x00, 0x80}), -2147483648)
     luaunit.assertAlmostEquals( m_u.bytesToSFixed32( {0xff, 0xff, 0xff, 0xff}), -1)
     luaunit.assertAlmostEquals( m_u.bytesToSFixed32( {0x00, 0x00, 0x00, 0x00}), 0)
@@ -23,13 +26,13 @@ function test_bytesToSFixed32()
     luaunit.assertAlmostEquals( m_u.bytesToSFixed32( {0xff, 0xff, 0xff, 0x7f}), 2147483647)
 end
 
-function test_bytesToFixed64()
+function TU.test_bytesToFixed64()
     luaunit.assertAlmostEquals( m_u.bytesToFixed64( {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}), 0)
     luaunit.assertAlmostEquals( m_u.bytesToFixed64( {0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}), 1)
     luaunit.assertAlmostEquals( m_u.bytesToFixed64( {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff}), 18446744073709551615)
 end
 
-function test_bytesToSFixed64()
+function TU.test_bytesToSFixed64()
     luaunit.assertAlmostEquals( m_u.bytesToSFixed64( {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80}), -9223372036854775808)
     luaunit.assertAlmostEquals( m_u.bytesToSFixed64( {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff}), -1)
     luaunit.assertAlmostEquals( m_u.bytesToSFixed64( {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}), 0)
@@ -37,14 +40,14 @@ function test_bytesToSFixed64()
     luaunit.assertAlmostEquals( m_u.bytesToSFixed64( {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x7f}), 9223372036854775807)
 end
 
-function test_bytesToFloat32()
+function TU.test_bytesToFloat32()
     luaunit.assertAlmostEquals( m_u.bytesToFloat32( {0x00, 0x00, 0x00, 0x00}), 0.0)
     luaunit.assertAlmostEquals( m_u.bytesToFloat32( {0x20, 0xb2, 0x96, 0x49}), 1234500.0)
     luaunit.assertAlmostEquals( m_u.bytesToFloat32( {0x2c, 0x52, 0x9a, 0x44}), 1234.56789, 0.001)
     luaunit.assertAlmostEquals( m_u.bytesToFloat32( {0x2c, 0x52, 0x9a, 0xc4}), -1234.56789, 0.001)
 end
 
-function test_bytesToDouble()
+function TU.test_bytesToDouble()
     luaunit.assertAlmostEquals( m_u.bytesToDouble( {0x00, 0x00, 0x00, 0x00, 0x44, 0xd6, 0x32, 0xc1}), -1.2345e6)
     luaunit.assertAlmostEquals( m_u.bytesToDouble( {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xbf}), -1)
     luaunit.assertAlmostEquals( m_u.bytesToDouble( {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}), 0.0)
@@ -54,14 +57,14 @@ function test_bytesToDouble()
     luaunit.assertAlmostEquals( m_u.bytesToDouble( {0x58, 0xa4, 0x0c, 0x54, 0x34, 0x6f, 0x9d, 0x41}), 123456789.0123456789)
 end
 
-function test_strToBuf()
+function TU.test_strToBuf()
     local str = "DEAD BEEF"
     luaunit.assertEquals( m_u.strToBuf( str), {0x44, 0x45, 0x41, 0x44, 0x20, 0x42, 0x45, 0x45, 0x46})
 end
 
-function test_bufToStr()
+function TU.test_bufToStr()
     local buffer = {0x44, 0x45, 0x41, 0x44, 0x20, 0x42, 0x45, 0x45, 0x46}
     luaunit.assertEquals( m_u.bufToStr( buffer), "DEAD BEEF")
 end
 
-os.exit( luaunit.LuaUnit.run() )
+return TU

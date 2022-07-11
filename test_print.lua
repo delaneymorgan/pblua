@@ -3,7 +3,10 @@ local luaunit = require( "luaunit")
 local m_p = require( "print")
 
 
-function test_sprint()
+local TP = {}
+
+
+function TP.test_sprint()
     local tab = { a=1, b=2, c=3, d={4, 5, 6}, e={z=123, x=321, y="FRED"}}
     tab[1] = 1.2345
     tab[2] = { 956, 123}
@@ -11,9 +14,10 @@ function test_sprint()
     luaunit.assertEquals( m_p.eprint( {}), "{}")
 end
 
-function test_pbuf()
+function TP.test_pbuf()
     local bytes = {0x00, 0x01, 0x02, 0x03, 0x04}
     luaunit.assertEquals( m_p.pbuf( bytes), "[0x00, 0x01, 0x02, 0x03, 0x04]")
 end
 
-os.exit( luaunit.LuaUnit.run() )
+
+return TP
