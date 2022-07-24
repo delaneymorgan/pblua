@@ -17,6 +17,12 @@ end
 function TP.test_pbuf()
     local bytes = {0x00, 0x01, 0x02, 0x03, 0x04}
     luaunit.assertEquals( m_p.pbuf( bytes), "[0x00, 0x01, 0x02, 0x03, 0x04]")
+    bytes = {}
+    bytes[1] = 0x00
+    bytes[2] = 0x01
+    bytes[4] = 0x03
+    bytes[5] = 0x04
+    luaunit.assertEquals( m_p.pbuf( bytes), "[0x00, 0x01, nil, 0x03, 0x04]")
 end
 
 

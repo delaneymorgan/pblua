@@ -86,13 +86,19 @@ PRINT.pbuf = function( buf, start, length)
     local str = ""
     local first = true
     str = "["
-    for idx,value in ipairs( buf) do
+    local value
+    for idx = 1, #buf do
+        value = buf[idx]
         if idx >= start then
             if not first then
                 str = str .. ", "
             end
             first = false
-            str = str .. string.format( "0x%02x", value)
+            if value ~= nil then
+                str = str .. string.format( "0x%02x", value)
+            else
+                str = str .. tostring( value)
+            end
         end
         if (idx - start) > length then
             break
