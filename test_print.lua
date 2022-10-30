@@ -7,10 +7,10 @@ local TP = {}
 
 
 function TP.test_sprint()
-    local tab = { a=1, b=2, c=3, d={4, 5, 6}, e={z=123, x=321, y="FRED"}}
+    local tab = { a=1, b=false, c=3, d={4, 5, 6}, e={z=123, x=true, y="FRED"}}
     tab[1] = 1.2345
     tab[2] = { 956, 123}
-    luaunit.assertEquals( m_p.eprint( tab), '{a:1, b:2, c:3, d:[4, 5, 6], e:{x:321, y:"FRED", z:123}}[1.2345, [956, 123]]')
+    luaunit.assertEquals( m_p.eprint( tab), '{a:1, b:false, c:3, d:[4, 5, 6], e:{x:true, y:"FRED", z:123}}[1.2345, [956, 123]]')
     luaunit.assertEquals( m_p.eprint( {}), "{}")
 end
 
